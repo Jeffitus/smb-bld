@@ -701,6 +701,8 @@ credits_threecreepio:
 	.byte "BY: THREECREEPIO        "
 credits_simplistic_memes:
 	.byte "BY: SIMPLISTIC MEMES    "
+credits_bld_jeffitus:
+	.byte "BLIND MODS BY: JEFFITUS "
 credits_reset:
 	.byte "CATCH THEM WITH PRACTICE"
 credits_end:
@@ -708,12 +710,14 @@ credits_end:
 credits_length:
 	.byte credits_threecreepio-credits_pellsson
 	.byte credits_simplistic_memes-credits_threecreepio
-	.byte credits_reset-credits_simplistic_memes
+	.byte credits_bld_jeffitus-credits_simplistic_memes
+	.byte credits_reset-credits_bld_jeffitus
 	.byte credits_end-credits_reset
 credits_offset:
 	.byte credits_pellsson-credits_start
 	.byte credits_threecreepio-credits_start
 	.byte credits_simplistic_memes-credits_start
+	.byte credits_bld_jeffitus-credits_start
 	.byte credits_reset-credits_start
 
 update_credits:

@@ -1,5 +1,5 @@
 set -e
-python genchr.py
+python3 genchr.py
 cat smb/smborg-sprites.chr smb/smborg-back.chr smborg-lost-charset.chr \
 	smb/lost-sprites.chr smb/lost-back.chr lost-smborg-charset.chr \
 	smb/peach-sprites.chr \

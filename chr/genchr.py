@@ -1,6 +1,6 @@
 def make_full_bank(v): return v + (b'\xff' * (0x1000 - len(v)))
 
-leader_boards = ['andrewg', 'leontoast', 'roylt', 'tavenwebb2002', 'darbian', 'kosmic', 'somewes']
+leader_boards = ['crescendo', 'leontoast', 'roylt', 'tavenwebb2002', 'darbian', 'kosmic', 'somewes']
 
 num_face_banks = 0
 fixed_sprites = open('intro/intro-sprites.chr', 'rb').read()
