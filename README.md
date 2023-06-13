@@ -8,7 +8,8 @@ A speedrun practice ROM for Super Mario Bros. and Super Mario Bros 2 - The Lost 
 
 For feature requests or bug reports, please visit the [issue tracker](https://github.com/jeffitus/smb-bld/issues) for blindfolded specific issues, or [Pellsson's issue tracker](https://github.com/pellsson/smb/issues) for more general issues (although I may be able to help with those, too).
 
-The remainder of the readme is unchanged from the original Pellsson repository.
+
+*The remainder of this readme is unchanged from the original [Pellsson repository](https://github.com/pellsson/smb).*
 
 Looking to practice on PAL? [Try out threecreepio's independent PAL-conversion.](https://github.com/threecreepio/pallsson)
 
