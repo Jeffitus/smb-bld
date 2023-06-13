@@ -1,14 +1,20 @@
 # SMB & SMB2J Practice ROM
 
-A speedrun practice ROM for Super Mario Bros. and Super Mario Bros 2 - The Lost Levels.
+A speedrun practice ROM for Super Mario Bros. and Super Mario Bros 2 - The Lost Levels. This version includes modifications meant to aid in blindfolded practice.
 
-For feature requests or bug reports, please visit the [issue tracker](https://github.com/pellsson/smb/issues).
+### Currently Implemented Features
+- 6/4 Metronome-style noise channel for underground section
+- Blindfolded WR holders on title screen (WIP - currently only Crescendo and Aryais have been added)
+
+For feature requests or bug reports, please visit the [issue tracker](https://github.com/jeffitus/smb-bld/issues) for blindfolded specific issues, or [Pellsson's issue tracker](https://github.com/pellsson/smb/issues) for more general issues (although I may be able to help with those, too).
+
+The remainder of the readme is unchanged from the original Pellsson repository.
 
 Looking to practice on PAL? [Try out threecreepio's independent PAL-conversion.](https://github.com/threecreepio/pallsson)
 
 ## Major Version 5 (Current 5.6)
 
-### New Features 
+### New Features
 - Ability to **wipe SMB/LL/LL-EXT records** under settings.
 - Added [tavenwebb2002](https://twitch.tv/tavenwebb2002) to the loader. Huge congratulations on the world record.
 - Added **real-time counter** for each level (Records saved in WRAM).

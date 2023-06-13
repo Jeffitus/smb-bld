@@ -127,7 +127,7 @@ dont_wipe_bank_selection:
 hang:
 		jmp hang
 
-ReadJoypads: 
+ReadJoypads:
 		lda SavedJoypadBits
 		sta LAST_INPUT
 		lda #$01
@@ -215,7 +215,7 @@ next_palette_entry:
 		; Init WRAM
 		;
 		jsr Enter_InitializeWRAM
-		
+
 		rts
 
 ContraCode:
@@ -287,7 +287,8 @@ NonMaskableInterrupt:
 		bne NoChangeHead
 		ldx CurrentHead
 		inx
-		cpx #6
+		; change this for more or fewer heads
+		cpx #2
 		bne NoLooparoundHead
 		ldx #0
 NoLooparoundHead:
@@ -357,7 +358,7 @@ NoChangeHead:
 @set_hand:
 		sta $200+HAND_SPRITE_OFF+3
 		;
-		; 
+		;
 		;
 		lda LoaderFrameCounter
 		and #$07
@@ -412,7 +413,7 @@ dont_update_cursor:
 @go_down:
 		lda CursorY
 		ldx SEL_INDEX
-		inx 
+		inx
 		cpx #5
 		bne @no_loop_around
 		ldx #0
@@ -468,7 +469,7 @@ exit_nmi:
 		rti
 
 spawn_heart:
-		inc NumHearts 
+		inc NumHearts
 		jsr get_random
 		and #1
 		sta ThrowDir
