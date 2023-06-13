@@ -819,7 +819,7 @@ LoadTriCtrlReg:
 
 HandleNoiseMusic:
         lda AreaMusicBuffer       ;check if playing underground or castle music
-        and #%11110011
+        and #%11110111
         beq ExitMusicHandler      ;if so, skip the noise routine
         dec Noise_BeatLenCounter  ;decrement noise beat length
         bne ExitMusicHandler      ;is it time for more data?
@@ -970,7 +970,7 @@ TimeRunningOutHdr:    .byte $08, <TimeRunOutMusData, >TimeRunOutMusData, $27, $1
 Star_CloudHdr:        .byte $20, <Star_CloudMData, >Star_CloudMData, $2e, $1a, $40
 EndOfLevelMusHdr:     .byte $20, <WinLevelMusData, >WinLevelMusData, $3d, $21
 ResidualHeaderData:   .byte $20, $c4, $fc, $3f, $1d
-UndergroundMusHdr:    .byte $18, <UndergroundMusData, >UndergroundMusData, $00, $00
+UndergroundMusHdr:    .byte $18, <UndergroundMusData, >UndergroundMusData, $00, $00, $41
 SilenceHdr:           .byte $08, <SilenceData, >SilenceData, $00
 CastleMusHdr:         .byte $00, <CastleMusData, >CastleMusData, $93, $62
 VictoryMusHdr:        .byte $10, <VictoryMusData, >VictoryMusData, $24, $14
@@ -1201,6 +1201,9 @@ UndergroundMusData:
       .byte $16, $83, $14, $20, $1e, $1c, $28, $26, $87
       .byte $24, $1a, $12, $10, $62, $0e, $80, $04, $04
       .byte $00
+	  
+	  ;noise data (not in original)
+	  .byte $31, $11, $11, $11, $11, $11, $00
 
 ;noise data directly follows square 2 here unlike in other songs
 WaterMusData:

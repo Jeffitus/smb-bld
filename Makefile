@@ -37,7 +37,7 @@ patch.zip: patch.ips
 	zip patch.zip patch.ips README.md
 
 patch.ips: smb.nes
-	python scripts/ips.py create --output patch.ips original.nes smb.nes
+	python3 scripts/ips.py create --output smb-bld.ips original.nes smb.nes
 
 inc/wram.inc: wram/ram_layout.asm $(OUT)/ram_layout.map
 	python scripts/genram.py $(OUT)/ram_layout.map inc/wram.inc
