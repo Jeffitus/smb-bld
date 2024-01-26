@@ -42,7 +42,7 @@ HeartVY = $727 ; and 728
 ; 5x ^
 
 MAX_HEARTS = 4
-SEL_START_Y = $7e
+SEL_START_Y = $76
 CURSOR_SPRITE = $0A
 FIRST_HEAD_TILE = $2E
 HEART_SPRITE = $18
@@ -62,6 +62,7 @@ Start:
 		lda #$00
 		sta MirrorPPUCTRL
 		sta PPU_CTRL_REG1
+		sta MMC5_SLIRQ ; disable irqs
 		;
 		; Init Random
 		;
@@ -105,9 +106,9 @@ dont_wipe_bank_selection:
 		inx
 		bne clear_memory
 
-		lda #CHR_INTRO_SPR0
-		ldx #CHR_INTRO_BG
-		jsr SetChrBanksFromAX
+		ldx #CHR_INTRO_SPR0
+		ldy #CHR_INTRO_BG
+		jsr SetChrBanksFromXY
 
 		jsr enter_loader
 
@@ -414,7 +415,7 @@ dont_update_cursor:
 		lda CursorY
 		ldx SEL_INDEX
 		inx
-		cpx #5
+		cpx #6
 		bne @no_loop_around
 		ldx #0
 		lda #SEL_START_Y-16
@@ -432,8 +433,8 @@ dont_update_cursor:
 		ldx SEL_INDEX
 		dex
 		bpl @no_underflow
-		ldx #4
-		lda #SEL_START_Y+(5*16)
+		ldx #5
+		lda #SEL_START_Y+(6*16)
 @no_underflow:
 		sec
 		sbc #16
@@ -442,9 +443,9 @@ dont_update_cursor:
 		cmp #Start_Button
 		bne exit_nmi
 		ldx SEL_INDEX
-		cpx #3
-		beq @settings
 		cpx #4
+		beq @settings
+		cpx #5
 		beq @showrecords
 		lda bank_table, x
 		jmp StartBank
@@ -872,12 +873,12 @@ palette_star_shuffle:
 		.byte $0f, $0D, $16, $27 ; Princess cloud
 
 bank_table:
-		.byte BANK_ORG, BANK_SMBLL, BANK_SCEN
+		.byte BANK_ORG, BANK_SMBLL, BANK_ANNLL, BANK_SCEN
 
 	.include "settings.asm"
 	.include "records.asm"
 	.include "smlsound.asm"
 	.include "faxsound.asm"
 
-practice_callgate
-control_bank
+practice_callgate BANK_LOADER
+control_bank BANK_LOADER

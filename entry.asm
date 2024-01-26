@@ -96,12 +96,8 @@ control_bank 16*4
 
 .segment "chr4"
 .incbin "chr/intro/intro-sprites.chr"
-.incbin "chr/intro/andrewg.chr"
-.incbin "chr/intro/darbian.chr"
-.incbin "chr/intro/roylt.chr"
-.incbin "chr/intro/tavenwebb2002.chr"
-.incbin "chr/intro/kosmic.chr"
-.incbin "chr/intro/leontoast.chr"
+.incbin "chr/intro/crescendo.chr"
+.incbin "chr/intro/aryais.chr"
 
 .segment "chr5"
 .incbin "chr/statusbar.chr"
