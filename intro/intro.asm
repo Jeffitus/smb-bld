@@ -42,7 +42,7 @@ HeartVY = $727 ; and 728
 ; 5x ^
 
 MAX_HEARTS = 4
-SEL_START_Y = $76
+SEL_START_Y = $7e
 CURSOR_SPRITE = $0A
 FIRST_HEAD_TILE = $2E
 HEART_SPRITE = $18
@@ -62,7 +62,6 @@ Start:
 		lda #$00
 		sta MirrorPPUCTRL
 		sta PPU_CTRL_REG1
-		sta MMC5_SLIRQ ; disable irqs
 		;
 		; Init Random
 		;
@@ -106,9 +105,9 @@ dont_wipe_bank_selection:
 		inx
 		bne clear_memory
 
-		ldx #CHR_INTRO_SPR0
-		ldy #CHR_INTRO_BG
-		jsr SetChrBanksFromXY
+		lda #CHR_INTRO_SPR0
+		ldx #CHR_INTRO_BG
+		jsr SetChrBanksFromAX
 
 		jsr enter_loader
 
@@ -128,7 +127,7 @@ dont_wipe_bank_selection:
 hang:
 		jmp hang
 
-ReadJoypads: 
+ReadJoypads:
 		lda SavedJoypadBits
 		sta LAST_INPUT
 		lda #$01
@@ -216,7 +215,7 @@ next_palette_entry:
 		; Init WRAM
 		;
 		jsr Enter_InitializeWRAM
-		
+
 		rts
 
 ContraCode:
@@ -288,7 +287,8 @@ NonMaskableInterrupt:
 		bne NoChangeHead
 		ldx CurrentHead
 		inx
-		cpx #6
+		; change this for more or fewer heads
+		cpx #2
 		bne NoLooparoundHead
 		ldx #0
 NoLooparoundHead:
@@ -358,7 +358,7 @@ NoChangeHead:
 @set_hand:
 		sta $200+HAND_SPRITE_OFF+3
 		;
-		; 
+		;
 		;
 		lda LoaderFrameCounter
 		and #$07
@@ -413,8 +413,8 @@ dont_update_cursor:
 @go_down:
 		lda CursorY
 		ldx SEL_INDEX
-		inx 
-		cpx #6
+		inx
+		cpx #5
 		bne @no_loop_around
 		ldx #0
 		lda #SEL_START_Y-16
@@ -432,8 +432,8 @@ dont_update_cursor:
 		ldx SEL_INDEX
 		dex
 		bpl @no_underflow
-		ldx #5
-		lda #SEL_START_Y+(6*16)
+		ldx #4
+		lda #SEL_START_Y+(5*16)
 @no_underflow:
 		sec
 		sbc #16
@@ -442,9 +442,9 @@ dont_update_cursor:
 		cmp #Start_Button
 		bne exit_nmi
 		ldx SEL_INDEX
-		cpx #4
+		cpx #3
 		beq @settings
-		cpx #5
+		cpx #4
 		beq @showrecords
 		lda bank_table, x
 		jmp StartBank
@@ -469,7 +469,7 @@ exit_nmi:
 		rti
 
 spawn_heart:
-		inc NumHearts 
+		inc NumHearts
 		jsr get_random
 		and #1
 		sta ThrowDir
@@ -700,21 +700,25 @@ credits_pellsson:
 	.byte "BY: PELLSSON            "
 credits_threecreepio:
 	.byte "BY: THREECREEPIO        "
-credits_simplistic6502:
-	.byte "BY: SIMPLISTIC6502      "
+credits_simplistic_memes:
+	.byte "BY: SIMPLISTIC MEMES    "
+credits_bld_jeffitus:
+	.byte "BLIND MODS BY: JEFFITUS "
 credits_reset:
 	.byte "CATCH THEM WITH PRACTICE"
 credits_end:
 
 credits_length:
 	.byte credits_threecreepio-credits_pellsson
-	.byte credits_simplistic6502-credits_threecreepio
-	.byte credits_reset-credits_simplistic6502
+	.byte credits_simplistic_memes-credits_threecreepio
+	.byte credits_bld_jeffitus-credits_simplistic_memes
+	.byte credits_reset-credits_bld_jeffitus
 	.byte credits_end-credits_reset
 credits_offset:
 	.byte credits_pellsson-credits_start
 	.byte credits_threecreepio-credits_start
-	.byte credits_simplistic6502-credits_start
+	.byte credits_simplistic_memes-credits_start
+	.byte credits_bld_jeffitus-credits_start
 	.byte credits_reset-credits_start
 
 update_credits:
@@ -868,12 +872,12 @@ palette_star_shuffle:
 		.byte $0f, $0D, $16, $27 ; Princess cloud
 
 bank_table:
-		.byte BANK_ORG, BANK_SMBLL, BANK_ANNLL, BANK_SCEN
+		.byte BANK_ORG, BANK_SMBLL, BANK_SCEN
 
 	.include "settings.asm"
 	.include "records.asm"
 	.include "smlsound.asm"
 	.include "faxsound.asm"
 
-practice_callgate BANK_LOADER
-control_bank BANK_LOADER
+practice_callgate
+control_bank
