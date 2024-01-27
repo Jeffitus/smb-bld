@@ -925,7 +925,7 @@ LL_HandleNoiseMusic:
         cmp #VictoryMusic
         beq @ContinueNoise        ;if so, do not leave the noise routine
         lda AreaMusicBuffer       ;check if playing underground or castle music
-        and #%11110011
+        and #%11110111
         beq LL_ExitMusicHandler   ;if so, skip the noise routine
 @ContinueNoise:
         dec Noise_BeatLenCounter  ;decrement noise beat length
@@ -1089,7 +1089,7 @@ LL_TimeRunningOutHdr:     .byte $08, <LL_TimeRunOutMusData, >LL_TimeRunOutMusDat
 LL_Star_CloudHdr:         .byte $20, <LL_Star_CloudMData, >LL_Star_CloudMData, $2e, $1a, $40
 LL_EndOfLevelMusHdr:      .byte $20, <LL_WinLevelMusData, >LL_WinLevelMusData, $3d, $21
 LL_ResidualHeaderData:    .byte $20, $fb, $dc, $3f, $1d
-LL_UndergroundMusHdr:     .byte $18, <LL_UndergroundMusData, >LL_UndergroundMusData, $00, $00
+LL_UndergroundMusHdr:     .byte $18, <LL_UndergroundMusData, >LL_UndergroundMusData, $00, $00, $41
 LL_SilenceHdr:            .byte $08, <LL_SilenceData, >LL_SilenceData, $00
 LL_CastleMusHdr:          .byte $00, <LL_CastleMusData, >LL_CastleMusData, $93, $62
 LL_VictoryPart1AHdr:      .byte $30, <LL_VictoryM_P1AData, >LL_VictoryM_P1AData, $24, $14, $77
@@ -1325,6 +1325,9 @@ LL_UndergroundMusData:
       .byte $16, $83, $14, $20, $1e, $1c, $28, $26, $87
       .byte $24, $1a, $12, $10, $62, $0e, $80, $04, $04
       .byte $00
+	  
+	  ;noise data (not in original)
+	  .byte $31, $11, $11, $11, $11, $11, $00
 
 ;noise data directly follows square 2 here unlike in other songs
 LL_WaterMusData:
