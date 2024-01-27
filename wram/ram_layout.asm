@@ -25,7 +25,9 @@ WRAM_SaveStateBank:
 	.byte $00
 WRAM_DisableMusic:
 	.byte $00
-WRAM_DisableSound:
+;WRAM_DisableSound:
+;	.byte $00
+WRAM_DisableUGSound:
 	.byte $00
 WRAM_SaveButtons:
 	.byte $00

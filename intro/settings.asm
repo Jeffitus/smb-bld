@@ -123,15 +123,25 @@ _draw_music_opt:
 @on:
 		jmp _music_on
 
-_sound_on: draw_simple_at 6, "ON "
-_sound_off: draw_simple_at 6, "OFF"
+;_sound_on: draw_simple_at 6, "ON "
+;_sound_off: draw_simple_at 6, "OFF"
+;
+;_draw_sound_opt:
+;		lda WRAM_DisableSound
+;		beq @on
+;		jmp _sound_off
+;@on:
+;		jmp _sound_on
+		
+_ug_sound_on: draw_simple_at 6, "ON "
+_ug_sound_off: draw_simple_at 6, "OFF"
 
-_draw_sound_opt:
-		lda WRAM_DisableSound
+_draw_ug_sound_opt:
+		lda WRAM_DisableUGSound
 		beq @on
-		jmp _sound_off
+		jmp _ug_sound_off
 @on:
-		jmp _sound_on
+		jmp _ug_sound_on
 
 get_uservar_ptr:
 		ldx SETTINGS_INDEX
@@ -265,7 +275,8 @@ _draw_reset_wram_opt:
 
 settings_renderers:
 		.word _draw_music_opt
-		.word _draw_sound_opt
+;		.word _draw_sound_opt
+		.word _draw_ug_sound_opt
 		.word _draw_user0org_opt
 		.word _draw_user1org_opt
 		.word _draw_user0lost_opt
@@ -346,9 +357,17 @@ _select_music:
 @on:
 		jmp set_selection_sprites
 
-_select_sound:
+;_select_sound:
+;		ldx #2
+;		lda WRAM_DisableSound
+;		beq @on
+;		inx ; OFF
+;@on:
+;		jmp set_selection_sprites
+		
+_select_ug_sound:
 		ldx #2
-		lda WRAM_DisableSound
+		lda WRAM_DisableUGSound
 		beq @on
 		inx ; OFF
 @on:
@@ -421,7 +440,8 @@ _select_reset_records:
 
 select_option:
 		.word _select_music
-		.word _select_sound
+;		.word _select_sound
+		.word _select_ug_sound
 		.word _select_value
 		.word _select_value
 		.word _select_value
@@ -513,12 +533,21 @@ _music_input:
 @nope:
 		rts
 
-_sound_input:
+;_sound_input:
+;		and #(B_Button|A_Button)
+;		beq @nope
+;		lda WRAM_DisableSound
+;		eor #1
+;		sta WRAM_DisableSound
+;@nope:
+;		rts
+		
+_ug_sound_input:
 		and #(B_Button|A_Button)
 		beq @nope
-		lda WRAM_DisableSound
+		lda WRAM_DisableUGSound
 		eor #1
-		sta WRAM_DisableSound
+		sta WRAM_DisableUGSound
 @nope:
 		rts
 
@@ -832,7 +861,8 @@ _reset_wram_input:
 
 option_inputs:
 		.word _music_input
-		.word _sound_input
+;		.word _sound_input
+		.word _ug_sound_input
 		.word _user_input
 		.word _user_input
 		.word _user_input

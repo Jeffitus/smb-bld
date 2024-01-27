@@ -67,8 +67,8 @@ SkipPIn: lda #$00                  ;clear pause sfx buffer
          beq SkipSoundSubroutines
 
 RunSoundSubroutines:
-         lda WRAM_DisableSound
-         bne @nosound
+;         lda WRAM_DisableSound
+;         bne @nosound
          jsr Square1SfxHandler  ;play sfx on square channel 1
          jsr Square2SfxHandler  ; ''  ''  '' square channel 2
          jsr NoiseSfxHandler    ; ''  ''  '' noise channel
@@ -823,9 +823,14 @@ LoadTriCtrlReg:
         sta SND_TRIANGLE_REG      ;save final contents of A into control reg for triangle
 
 HandleNoiseMusic:
-        lda AreaMusicBuffer       ;check if playing underground or castle music
+		lda AreaMusicBuffer       ;check if playing castle music
         and #%11110111
         beq ExitMusicHandler      ;if so, skip the noise routine
+		and #%11111011			  ;check if playing underground music
+		bne ContinueNoise		  ;if not, play noise
+		lda WRAM_DisableUGSound   ;if so, check setting
+		bne ExitMusicHandler
+ContinueNoise:
         dec Noise_BeatLenCounter  ;decrement noise beat length
         bne ExitMusicHandler      ;is it time for more data?
 

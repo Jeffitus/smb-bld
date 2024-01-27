@@ -69,8 +69,8 @@ LL_SoundEngine:
          beq LL_SkipSoundSubroutines
 
 LL_RunSoundSubroutines:
-         lda WRAM_DisableSound
-         bne @nosound
+;         lda WRAM_DisableSound
+;         bne @nosound
          jsr LL_Square1SfxHandler  ;play sfx on square channel 1
          jsr LL_Square2SfxHandler  ; ''  ''  '' square channel 2
          jsr LL_NoiseSfxHandler    ; ''  ''  '' noise channel
@@ -927,6 +927,10 @@ LL_HandleNoiseMusic:
         lda AreaMusicBuffer       ;check if playing underground or castle music
         and #%11110111
         beq LL_ExitMusicHandler   ;if so, skip the noise routine
+		and #%11111011			  ;check if playing underground music
+		bne @ContinueNoise		  ;if not, play noise
+		lda WRAM_DisableUGSound   ;if so, check setting
+		bne LL_ExitMusicHandler
 @ContinueNoise:
         dec Noise_BeatLenCounter  ;decrement noise beat length
         bne LL_ExitMusicHandler   ;is it time for more data?
